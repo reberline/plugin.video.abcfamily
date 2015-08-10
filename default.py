@@ -194,8 +194,6 @@ def getVideo(surl, vid):
        finalurl = re.compile('<media url="(.+?)"',re.DOTALL).search(html).group(1).replace('&amp;','&')
     xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, xbmcgui.ListItem(path = finalurl))
     suburl = 'http://api.contents.watchabc.go.com/vp2/ws/s/contents/2020/videos/002/001/-1/-1/-1/VDKA%s/-1/-1?v=08.00' % vid
-    print "vid = "+str(vid)
-    print "suburl = "+str(suburl)
     if (suburl != "") and (addon.getSetting('sub_enable') == "true"):
        profile = addon.getAddonInfo('profile').decode(UTF8)
        subfile = xbmc.translatePath(os.path.join(profile, 'Subtitles.srt'))
@@ -204,7 +202,6 @@ def getVideo(surl, vid):
           os.makedirs(prodir)
 
        pg = getRequest(suburl)
-       print "pg = "+str(pg)
        suburl = re.compile('<closedcaption enabled="true">.+?http:(.+?)<',re.DOTALL).search(pg).group(1)
        suburl = 'http:'+suburl.strip()
        pg = getRequest(suburl)
